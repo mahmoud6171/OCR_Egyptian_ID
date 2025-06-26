@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Egyptian ID Card OCR</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .drag-area {
+            border: 2px dashed #4a5568;
+            transition: all 0.3s ease;
+        }
+        .drag-area.active {
+            border-color: #4299e1;
+            background-color: #ebf8ff;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .animate-spin {
+            animation: spin 1s linear infinite;
+        }
+        [dir="rtl"] {
+            text-align: right;
+            direction: rtl;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">Egyptian ID Card OCR</h1>
+            <p class="text-gray-600">Upload your ID card image for instant text extraction</p>
+        </div>
+
+        <!-- Main Content -->
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- Upload Section -->
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <div class="mb-6">
+                    <h2 class="text-xl font-semibold mb-4">Upload ID Card</h2>
+                    <div class="flex space-x-4 mb-4">
+                        <button id="frontBtn" class="flex-1 py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 active">Front Side</button>
+                        <button id="backBtn" class="flex-1 py-2 px-4 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">Back Side</button>
+                    </div>
+                </div>
+
+                <!-- Drag & Drop Area -->
+                <div id="dragArea" class="drag-area rounded-lg p-8 text-center cursor-pointer">
+                    <div class="space-y-4">
+                        <i class="fas fa-cloud-upload-alt text-4xl text-gray-400"></i>
+                        <p class="text-gray-500">Drag & Drop your ID card image here</p>
+                        <p class="text-sm text-gray-400">or</p>
+                        <button id="browseBtn" class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                            Browse Files
+                        </button>
+                        <input type="file" id="fileInput" class="hidden" accept="image/*">
+                    </div>
+                </div>
+
+                <!-- Preview Area -->
+                <div id="previewArea" class="mt-6 hidden">
+                    <h3 class="text-lg font-semibold mb-2">Preview</h3>
+                    <div class="relative">
+                        <img id="previewImage" class="w-full rounded-lg shadow" src="" alt="Preview">
+                        <button id="removePreview" class="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-full hover:bg-red-600 focus:outline-none">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <div class="mb-4 flex justify-between items-center">
+                    <h2 class="text-xl font-semibold">Extracted Information</h2>
+                    <div id="loadingIndicator" class="hidden">
+                        <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-500"></div>
+                    </div>
+                </div>
+
+                <!-- Results Content -->
+                <div id="resultsContent" class="space-y-4">
+                    <div class="text-center text-gray-500 py-8">
+                        <i class="fas fa-database text-4xl mb-2"></i>
+                        <p>Upload an ID card to see extracted information</p>
+                    </div>
+                </div>
+
+                <!-- Processed Image -->
+                <div id="processedImageArea" class="mt-6 hidden">
+                    <h3 class="text-lg font-semibold mb-2">Processed Image</h3>
+                    <img id="processedImage" class="w-full rounded-lg shadow" src="" alt="Processed">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toastContainer" class="fixed bottom-4 right-4 space-y-2"></div>    <script src="static/main.js" defer></script>
+</body>
+</html>
