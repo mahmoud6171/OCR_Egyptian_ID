@@ -61,13 +61,14 @@ def get_reader(lang='ar'):
     languages = ['ar', 'en']
     if lang == 'en':
         # If English is specifically requested, use English first
-        languages = ['en', 'ar']
+        return easyocr.Reader(['en'], gpu=gpu_available, )
+    
     return easyocr.Reader(languages, gpu=gpu_available, detect_network="craft")
 
 # Global model instances
-id_card_model = get_yolo_model('detect_id_card.pt')
-id_number_model = get_yolo_model('detect_id.pt')
-fields_model = get_yolo_model('detect_odjects.pt')
+id_card_model = get_yolo_model('models/detect_id_card.pt')
+id_number_model = get_yolo_model('models/detect_id.pt')
+fields_model = get_yolo_model('models/detect_odjects.pt')
 
 # Function to preprocess the cropped image
 def preprocess_image(cropped_image):
@@ -142,13 +143,13 @@ def process_image(cropped_image):
             bbox = [int(coord) for coord in bbox]
 
             if class_name == 'firstName':
-                first_name = extract_text(cropped_image, bbox, lang='ara')
+                first_name = extract_text(cropped_image, bbox, lang='ar')
             elif class_name == 'lastName':
-                second_name = extract_text(cropped_image, bbox, lang='ara')
+                second_name = extract_text(cropped_image, bbox, lang='ar')
             elif class_name == 'serial':
-                serial = extract_text(cropped_image, bbox, lang='eng')
+                serial = extract_text(cropped_image, bbox, lang='en')
             elif class_name == 'address':
-                address = extract_text(cropped_image, bbox, lang='ara')
+                address = extract_text(cropped_image, bbox, lang='ar')
             elif class_name == 'nid':
                 expanded_bbox = expand_bbox_height(bbox, scale=1.5, image_shape=cropped_image.shape)
                 cropped_nid = cropped_image[expanded_bbox[1]:expanded_bbox[3], expanded_bbox[0]:expanded_bbox[2]]
