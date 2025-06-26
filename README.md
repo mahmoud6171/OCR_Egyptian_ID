@@ -16,13 +16,12 @@ This project provides an API and web interface for extracting information from E
 ```
 app_fastapi.py         # Main FastAPI backend
 utils.py               # OCR, detection, and processing utilities
-userinput.py           # (Optional) User input handling
+models/
 static/
   index.html           # Web frontend
   main.js              # Frontend JavaScript
   ...
-detect_id_card.pt      # YOLO model for ID card detection
-... (other .pt models) # Additional YOLO models
+
 ```
 
 ## Requirements
